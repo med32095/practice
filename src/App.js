@@ -59,6 +59,10 @@ function App() {
   const [pokemon, pokemonSet] = React.useState([]);
   const [selectedItem, selectedItemSet] = React.useState(null);
 
+  React.useEffect(() => {
+    fetch("http://localhost:3000/practice/pokemon.json").then((resp) => resp.json()).then((data) => pokemonSet(data));
+  }, []); // runs once on load and then never again. bc of the empty array.
+
   return (
     <div
       style={{
