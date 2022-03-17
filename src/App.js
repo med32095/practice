@@ -4,9 +4,12 @@ import styled from "@emotion/styled";
 
 import './App.css';
 
-const PokemonRow = ({ pokemon, onSelect }) => (
-  <tr>
+const PokemonRow = ({ pokemon, key, onSelect, japanese }) => (
+  <tr key={key}>
     <td>{pokemon.name.english}</td>
+    {japanese && 
+      <td>{pokemon.name.japanese}</td>
+    }
     <td>{pokemon.type.join(', ')}</td>
     <td>
       <button onClick={() => onSelect(pokemon)}>Select!</button>
@@ -18,6 +21,9 @@ PokemonRow.propTypes = {
   pokemon: PropTypes.shape({
     name: PropTypes.shape({
       english: PropTypes.string.isRequired,
+      japanese: PropTypes.string.isRequired,
+      chinese: PropTypes.string.isRequired,
+      french: PropTypes.string.isRequired,
     }),
     type: PropTypes.arrayOf(PropTypes.string.isRequired),
   }),
@@ -78,6 +84,8 @@ function App() {
   const [filter, filterSet] = React.useState("");
   const [pokemon, pokemonSet] = React.useState([]);
   const [selectedItem, selectedItemSet] = React.useState(null);
+  const [japanese, japaneseSet] = React.useState(false);
+
 
   React.useEffect(() => {
     fetch("http://localhost:3000/practice/pokemon.json").then((resp) => resp.json()).then((data) => pokemonSet(data));
@@ -86,7 +94,7 @@ function App() {
   return (
     <Container>
       <Title>Pokemon Search</Title>
-
+      <button onClick={() => japaneseSet(!japanese)}>toggle Japanese</button>
       <TwoColumnLayout>
         <div>
 
@@ -98,7 +106,11 @@ function App() {
             <thead>
               <tr>
                 <th>Name</th>
+                { japanese && 
+                  <th> </th>
+                }
                 <th>Type</th>
+                <th>Stats</th>
               </tr>
             </thead>
 
@@ -107,7 +119,7 @@ function App() {
               .filter((pokemon) => pokemon.name.english.toLowerCase().includes(filter.toLowerCase()))
               .slice(0,20)
               .map(pokemon => (
-                <PokemonRow pokemon={pokemon} key={pokemon.id} onSelect={(pokemon) => selectedItemSet(pokemon)}/>
+                <PokemonRow pokemon={pokemon} key={pokemon.id} japanese={japanese} onSelect={(pokemon) => selectedItemSet(pokemon)}/>
               ))}
             </tbody>
           </table>
