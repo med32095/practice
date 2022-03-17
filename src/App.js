@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "@emotion/styled";
 
 import './App.css';
 
@@ -51,8 +52,27 @@ PokemonInfo.propTypes = {
     "Sp. Attack": PropTypes.number.isRequired,
     "Sp. Defense": PropTypes.number.isRequired,
     Speed: PropTypes.number.isRequired,
-  })
+  }),
 };
+
+const Title = styled.h1`
+  text-align: center;
+`;
+const TwoColumnLayout = styled.div`
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-column-gap: 1rem
+`;
+const Container = styled.div`
+  margin: auto;
+  width: 800px;
+  paddingTop: 1rem;
+`;
+const Input = styled.input`
+  width: 100%;
+  font-size: x-large;
+  padding: 0.2rem;
+`;
 
 function App() {
   const [filter, filterSet] = React.useState("");
@@ -64,25 +84,13 @@ function App() {
   }, []); // runs once on load and then never again. bc of the empty array.
 
   return (
-    <div
-      style={{
-        margin: "auto",
-        width: 800,
-        paddingTop: "1rem",
-      }}
-    >
-      <h1 className="title">Pokemon Search</h1>
+    <Container>
+      <Title>Pokemon Search</Title>
 
-      <div 
-        style={{
-          display: "grid",
-          gridTemplateColumns: "70% 30%",
-          gridColumnGap: "1rem",
-        }}
-      >
+      <TwoColumnLayout>
         <div>
 
-          <input 
+          <Input 
             value={filter}
             onChange={(evt) => filterSet(evt.target.value)}
           />
@@ -105,9 +113,8 @@ function App() {
           </table>
         </div>
         {selectedItem && <PokemonInfo {...selectedItem} />}
-      </div>
-
-    </div>
+      </TwoColumnLayout>
+    </Container>
   );
 }
 
