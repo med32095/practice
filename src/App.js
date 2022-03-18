@@ -105,7 +105,7 @@ function App() {
             value={filter}
             onChange={(evt) => filterSet(evt.target.value)}
           />
-          <ButtonGroup variant="text" aria-label="text button group">
+          <ButtonGroup variant="text" fullWidth="true" aria-label="text button group">
             <Button onClick={() => japaneseSet(!japanese)}>toggle Japanese</Button>
             <Button onClick={() => chineseSet(!chinese)}>toggle Chinese</Button>
             <Button onClick={() => frenchSet(!french)}>toggle French</Button>
