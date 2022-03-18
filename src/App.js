@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import {Button, ButtonGroup} from '@mui/material'
 
 import './App.css';
 
@@ -12,7 +13,7 @@ const PokemonRow = ({ pokemon, key, onSelect, japanese, chinese, french }) => (
     {french && <td>{pokemon.name.french}</td>}
     <td>{pokemon.type.join(', ')}</td>
     <td>
-      <button onClick={() => onSelect(pokemon)}>Select!</button>
+      <Button variant="outlined" onClick={() => onSelect(pokemon)}>Select!</Button>
     </td>
   </tr>
 );
@@ -96,9 +97,7 @@ function App() {
   return (
     <Container>
       <Title>Pokemon Search</Title>
-      <button onClick={() => japaneseSet(!japanese)}>toggle Japanese</button>
-      <button onClick={() => chineseSet(!chinese)}>toggle Chinese</button>
-      <button onClick={() => frenchSet(!french)}>toggle French</button>
+      
       <TwoColumnLayout>
         <div>
 
@@ -106,6 +105,11 @@ function App() {
             value={filter}
             onChange={(evt) => filterSet(evt.target.value)}
           />
+          <ButtonGroup variant="text" aria-label="text button group">
+            <Button onClick={() => japaneseSet(!japanese)}>toggle Japanese</Button>
+            <Button onClick={() => chineseSet(!chinese)}>toggle Chinese</Button>
+            <Button onClick={() => frenchSet(!french)}>toggle French</Button>
+          </ButtonGroup>
           <table width="100%">
             <thead>
               <tr>
